@@ -6,36 +6,33 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoginDAO extends GenericDAO{
-
-	private Connection conexao = null;
-	private PreparedStatement pst = null;
-	private ResultSet rs = null;
 	
-	
-
-	public LoginDAO() {
-		
-		conexao = br.com.loja.Assistec.dal.ConexaoBD.getConnection();
+	//Método para verificar se o banco esta online
+	public Boolean bancoOnline()  {
+		Connection valor = conectarDAO();
+		if (valor != null){
+			try {
+				conectarDAO().close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return true;
+		} else
+			return false;
 	}
 	
-	public Connection getConexao() {
-		return this.conexao;
-	}
 	
-	public Boolean bancoOnline() throws SQLException {
-		return getConnection().isValid(0);
-	}
-
+	// Método para autenticar usuários
 	public Usuario autenticar(String login, String senha) throws SQLException {
-		String sql = "SELECT * FROM usuarios WHERE login=? AND senha=?";
+		String sql = "SELECT * FROM USUARIOS WHERE login=? AND senha=?";
 		Usuario usuario = null;
-		PreparedStatement pstm = getConnection().prepareStatement(sql);
-		pstm.setNString(1, login);
-		pstm.setNString(2, senha);
-		
-		ResultSet rs = pstm.executeQuery();
-		
-		while(rs.next()) {
+		PreparedStatement stmt = conectarDAO().prepareStatement(sql);
+
+		stmt.setString(1, login);
+		stmt.setString(2, senha);
+		ResultSet rs = stmt.executeQuery();
+
+		while (rs.next()) {
 			usuario = new Usuario();
 			usuario.setIduser(rs.getInt("iduser"));
 			usuario.setNome(rs.getString("nome"));
@@ -43,13 +40,12 @@ public class LoginDAO extends GenericDAO{
 			usuario.setLogin(rs.getString("login"));
 			usuario.setSenha(rs.getString("senha"));
 			usuario.setPerfil(rs.getString("perfil"));
-			
 		}
+
 		rs.close();
-		pstm.close();
-		getConnection().close();
-		
+		stmt.close();
+		conectarDAO().close();
+
 		return usuario;
-				
 	}
 }
