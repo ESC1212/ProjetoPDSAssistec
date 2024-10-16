@@ -62,6 +62,11 @@ public class PrincipalView extends JFrame {
 		menuBar.add(menuCadastro);
 		
 		JMenuItem menuUsuario = new JMenuItem("Usuários");
+		menuUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listarUsuarios();
+			}
+		});
 		menuCadastro.add(menuUsuario);
 		
 		JMenu menuRelatorio = new JMenu("Relatório");
@@ -107,7 +112,13 @@ public class PrincipalView extends JFrame {
 		}
 		
 	}
-	private void Sair() {
+	protected void listarUsuarios() {
+		// TODO Auto-generated method stub
+		ListarUsuariosView frame = new ListarUsuariosView();
+		frame.setVisible(true);
+	}
+
+	protected void Sair() {
 		int sair = JOptionPane.showConfirmDialog(null, "Você deseja Sair?","sair",JOptionPane.YES_NO_OPTION);
 		if(sair == 0) {
 			System.exit(0);
