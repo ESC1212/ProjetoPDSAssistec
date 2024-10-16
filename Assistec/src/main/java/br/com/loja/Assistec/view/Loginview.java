@@ -1,10 +1,11 @@
-package br.com.loja.Assistec.visao;
+package br.com.loja.Assistec.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -12,9 +13,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import com.google.protobuf.StringValueOrBuilder;
 
 import br.com.loja.Assistec.controle.LoginController;
 
@@ -69,6 +73,17 @@ public class Loginview extends JFrame {
 		txtUsuario = new JTextField();
 		txtSenha = new JPasswordField();
 		btnLogin = new JButton();
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					onClickBtnLogin();
+				} catch (SQLException e1) {
+					System.out.println("Usuario incorreto");
+				}
+			}
+
+			
+		});
 //		btnLogin.addActionListener(new ActionListener() {
 //			public void actionPerformed(ActionEvent e) {
 //				onClickBtnLogin();
@@ -128,5 +143,33 @@ public class Loginview extends JFrame {
 	public JLabel getLblStatus() {
 		return lblStatus;
 	}
+	
+	private void onClickBtnLogin() throws  SQLException {
+		// TODO Auto-generated method stub
+		ArrayList<String> autenticado = new ArrayList<>();
+		
+		if(
+				txtUsuario.getText() != null && 
+				!txtUsuario.getText().isEmpty()&& 
+				String.valueOf(txtSenha.getPassword()) != null && 
+				!String.valueOf(txtSenha.getPassword()).isEmpty()	
+		  ){
+			LoginController lc = new LoginController();
+				
+			try {
+				autenticado = lc.autenticar(txtUsuario.getText(), new String(txtSenha.getPassword()));
+				if(autenticado.get(0) != null) {
+					JOptionPane.showMessageDialog(this, "Ola "+autenticado.get(0)+", hoje tem tainha, vinho, e muito sexo","Atenção",JOptionPane.INFORMATION_MESSAGE);
+				}
+			} catch (SQLException e) {
+				System.out.println("merda");
+			}
+			
+		} else {
+			JOptionPane.showMessageDialog(btnLogin, "Bota os dados certos sua puta");
+		}
+		
+	}
+	
 
 }

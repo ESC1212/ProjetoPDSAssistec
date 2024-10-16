@@ -1,6 +1,6 @@
 package br.com.loja.Assistec;
 
-import br.com.loja.Assistec.visao.Loginview;
+import br.com.loja.Assistec.view.Loginview;
 
 public class App {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package br.com.loja.Assistec.visao;
+package br.com.loja.Assistec.view;
 
 import java.awt.EventQueue;
 
