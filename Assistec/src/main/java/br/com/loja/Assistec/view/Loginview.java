@@ -160,6 +160,10 @@ public class Loginview extends JFrame {
 				autenticado = lc.autenticar(txtUsuario.getText(), new String(txtSenha.getPassword()));
 				if(autenticado.get(0) != null) {
 					JOptionPane.showMessageDialog(this, "Ola "+autenticado.get(0)+", hoje tem tainha, vinho, e muito sexo","Atenção",JOptionPane.INFORMATION_MESSAGE);
+					this.dispose();
+					PrincipalView telaprincipal = new PrincipalView(autenticado.get(0),autenticado.get(1));
+					telaprincipal.setLocationRelativeTo(this);
+					telaprincipal.setVisible(true);
 				}
 			} catch (SQLException e) {
 				System.out.println("merda");
