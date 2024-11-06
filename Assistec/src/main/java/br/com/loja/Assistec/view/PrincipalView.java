@@ -16,8 +16,29 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class PrincipalView extends JFrame {
-
+	
+	private JMenuItem menuSobre;
 	private JPanel contentPane;
+	private JMenu menuAjuda;
+	private JMenu menuRelatorio;
+	private JMenu menuArquivo;
+	private JMenuItem menuSair;
+	private JMenu menuCadastro;
+	private JMenuItem menuUsuario;
+	private JLabel lbluser;
+	
+	public JMenuItem setMenuSobre() {
+		return menuSobre;
+	}
+	public JMenuItem setMenuSair() {
+		return menuSair;
+	}
+	public JMenuItem setMenuUsuario(){
+		return menuUsuario;
+	}
+	public JLabel setLbluser() {
+		return lbluser;
+	}
 
 	/**
 	 * Launch the application.
@@ -39,6 +60,9 @@ public class PrincipalView extends JFrame {
 	 * Create the frame.
 	 */
 	public PrincipalView(String user, String perfil) {
+		perfil = "O omi";
+		user = "jesus";
+		
 		setTitle("Assistec");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -46,49 +70,35 @@ public class PrincipalView extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JMenu menuArquivo = new JMenu("Arquivo");
+		menuArquivo = new JMenu("Arquivo");
 		menuBar.add(menuArquivo);
 		
-		JMenuItem menuSair = new JMenuItem("Sair");
-		menuSair.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Sair();
-			}
-		});
+		menuSair = new JMenuItem("Sair");
 		menuArquivo.add(menuSair);
 		
-		JMenu menuCadastro = new JMenu("Cadastro");
+		menuCadastro = new JMenu("Cadastro");
 		menuCadastro.setEnabled(false);
 		menuBar.add(menuCadastro);
 		
-		JMenuItem menuUsuario = new JMenuItem("Usuários");
-		menuUsuario.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				listarUsuarios();
-			}
-		});
+		menuUsuario = new JMenuItem("Usuários");
 		menuCadastro.add(menuUsuario);
 		
-		JMenu menuRelatorio = new JMenu("Relatório");
+		menuRelatorio = new JMenu("Relatório");
 		menuRelatorio.setEnabled(false);
 		menuBar.add(menuRelatorio);
 		
-		JMenu menuAjuda = new JMenu("Ajuda");
+		menuAjuda = new JMenu("Ajuda");
 		menuBar.add(menuAjuda);
 		
-		JMenuItem menuSobre = new JMenuItem("Sobre");
-		menuSobre.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(menuSobre, "Assistec verção 0.2");
-			}
-		});
+		menuSobre = new JMenuItem("Sobre");
+		
 		menuAjuda.add(menuSobre);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		
-		JLabel lbluser = new JLabel(user);
+		lbluser = new JLabel();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -105,24 +115,10 @@ public class PrincipalView extends JFrame {
 					.addContainerGap())
 		);
 		contentPane.setLayout(gl_contentPane);
-		
-		if(perfil.equalsIgnoreCase("admin")) {
-			menuCadastro.setEnabled(true);
-			menuRelatorio.setEnabled(true);
-		}
-		
-	}
-	protected void listarUsuarios() {
-		// TODO Auto-generated method stub
-		ListarUsuariosView frame = new ListarUsuariosView();
-		frame.setVisible(true);
-	}
 
-	protected void Sair() {
-		int sair = JOptionPane.showConfirmDialog(null, "Você deseja Sair?","sair",JOptionPane.YES_NO_OPTION);
-		if(sair == 0) {
-			System.exit(0);
-		}
-	}
-	
+			if(perfil.equalsIgnoreCase("admin")) {
+				menuCadastro.setEnabled(true);
+				menuRelatorio.setEnabled(true);
+			}
+	}	
 }
